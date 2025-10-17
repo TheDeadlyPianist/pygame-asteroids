@@ -2,6 +2,7 @@ from circleshape import CircleShape
 from constants import BULLET_RADIUS, BULLET_SPEED
 from pygame import Vector2
 import pygame
+from colors import PURPLE
 
 class Bullet(CircleShape):
     def __init__(self, x, y, rotation):
@@ -12,4 +13,4 @@ class Bullet(CircleShape):
         self.position += Vector2(0, 1).rotate(self.rotation) * BULLET_SPEED * dt
 
     def draw(self, screen):
-        pygame.draw.circle(screen, (255, 0, 255), self.position, BULLET_RADIUS, 2)
+        pygame.draw.circle(screen, PURPLE, self.position, BULLET_RADIUS, 2)

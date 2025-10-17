@@ -3,6 +3,7 @@ from circleshape import CircleShape
 import random
 from pygame import Vector2
 from constants import ASTEROID_KINDS, ASTEROID_MIN_RADIUS
+from colors import GREY
 
 
 class Asteroid(CircleShape):
@@ -11,7 +12,7 @@ class Asteroid(CircleShape):
         self.rotation = 0
 
     def draw(self, screen):
-        pygame.draw.circle(screen, (160, 160, 160), self.position, self.radius, 2)
+        pygame.draw.circle(screen, GREY, self.position, self.radius, 2)
 
     def update(self, dt):
         self.position += (self.velocity.rotate(self.rotation) * dt)

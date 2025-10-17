@@ -3,6 +3,7 @@ from pygame import Vector2
 from circleshape import CircleShape
 from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_MOVE_SPEED, SHOOT_COOLDOWN
 from bullet import Bullet
+from colors import WHITE
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -20,7 +21,7 @@ class Player(CircleShape):
         return [a, b, d, c]
     
     def draw(self, screen):
-        pygame.draw.polygon(screen, (255, 255, 255), self.triangle(), 2)
+        pygame.draw.polygon(screen, WHITE, self.triangle(), 2)
 
     def rotate(self, rotation):
         self.rotation += rotation
