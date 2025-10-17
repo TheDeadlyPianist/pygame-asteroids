@@ -3,10 +3,10 @@ from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
-import sys
 from bullet import Bullet
-from colors import BLACK, WHITE
+from colors import BLACK
 from hud import Hud
+import sys
 
 drawable = pygame.sprite.Group()
 updateable = pygame.sprite.Group()
@@ -54,9 +54,12 @@ def main():
                     bullet.kill()
                     hud.score += 1
             if asteroid.collision(player):
-                print("GAME OVER")
-                print(f"TOTAL SCORE: {hud.score}")
-                sys.exit()
+                if player.take_hit():
+                    print("GAME OVER")
+                    print(f"TOTAL SCORE: {hud.score}")
+                    sys.exit()
+                else:
+                    asteroid.kill()
 
         for entity in remove_if_out_of_bounds:
             entity.remove_out_of_bounds(dt)

@@ -3,13 +3,14 @@ from pygame import Vector2
 from circleshape import CircleShape
 from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_MOVE_SPEED, SHOOT_COOLDOWN
 from bullet import Bullet
-from colors import WHITE
+from colors import WHITE, CYAN
 
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 180
         self.shot_cooldown = 0
+        self.shield_level = 3
 
     def triangle(self):
         forward = Vector2(0, 1).rotate(self.rotation) * self.radius
@@ -20,8 +21,13 @@ class Player(CircleShape):
         d = self.position - (forward/2)
         return [a, b, d, c]
     
+    def draw_shield(self, screen):
+        for i in range(1, self.shield_level + 1):
+            pygame.draw.circle(screen, CYAN, self.position, self.radius + (i*7), 1)
+
     def draw(self, screen):
         pygame.draw.polygon(screen, WHITE, self.triangle(), 2)
+        self.draw_shield(screen)
 
     def rotate(self, rotation):
         self.rotation += rotation
@@ -49,3 +55,9 @@ class Player(CircleShape):
             bullet_position: Vector2 = self.position + (Vector2(0, 1).rotate(self.rotation) * self.radius)
             Bullet(bullet_position.x, bullet_position.y, self.rotation)
             self.shot_cooldown = SHOOT_COOLDOWN
+
+    def take_hit(self) -> bool:
+        if self.shield_level > 0:
+            self.shield_level -= 1
+            return False
+        return True
