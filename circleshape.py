@@ -13,6 +13,7 @@ class CircleShape(pygame.sprite.Sprite):
         self.velocity = Vector2(0, 0)
         self.radius = radius
         self.out_of_bound_time = 2.0
+        self.name = "CircleShape"
     
     def draw(self, screen):
         pass

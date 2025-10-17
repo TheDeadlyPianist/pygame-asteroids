@@ -10,7 +10,8 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 180
         self.shot_cooldown = 0
-        self.shield_level = 3
+        self.shield_level = 0
+        self.name = "Player"
 
     def triangle(self):
         forward = Vector2(0, 1).rotate(self.rotation) * self.radius

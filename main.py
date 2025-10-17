@@ -7,6 +7,8 @@ from bullet import Bullet
 from colors import BLACK
 from hud import Hud
 import sys
+from pickup import Pickup
+from pickuphandler import PickupHandler
 
 drawable = pygame.sprite.Group()
 updateable = pygame.sprite.Group()
@@ -14,6 +16,7 @@ asteroids = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 remove_if_out_of_bounds = pygame.sprite.Group()
 user_interface = pygame.sprite.Group()
+pickups = pygame.sprite.Group()
 
 def main():
     print("Starting Asteroids!")
@@ -31,11 +34,14 @@ def main():
     AsteroidField.containers = (updateable)
     Bullet.containers = (bullets, drawable, updateable, remove_if_out_of_bounds)
     Hud.containers = (user_interface)
+    Pickup.containers = (drawable, updateable, pickups)
+    PickupHandler.containers = (updateable)
 
     player = Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
     AsteroidField()
 
     hud = Hud()
+    PickupHandler(pickups)
 
     while(True):
         for event in pygame.event.get():
@@ -60,6 +66,10 @@ def main():
                     sys.exit()
                 else:
                     asteroid.kill()
+
+        for pickup in pickups:
+            if pickup.collision(player):
+                pickup.pickup_action(player)
 
         for entity in remove_if_out_of_bounds:
             entity.remove_out_of_bounds(dt)
